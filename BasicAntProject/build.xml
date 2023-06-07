@@ -1,6 +1,58 @@
 <?xml version="1.0"?>
-<project name="TestAnt1" default="bonjour">
-  <target name="bonjour">
-    <echo message="Premier test avec Ant!"/>
-  </target>
+<project name="AntTest" default="TestPoint1" basedir=".">
+	<description>
+		Builder Ant pour tests locaux
+	</description>
+	
+	<!-- Mettre en place les propriétés souvent réutilisées dans ce fichier -->
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+
+	
+	<!-- Nettoyer le build précédent -->
+	<target name="clean">
+        <delete dir="build"/>
+    </target>
+		
+	<!-- Debut du build -->
+	<target name="init" depends="clean">
+    	<echo message="Debut des traitements"/> 
+	    <echo file="${basedir}/log.txt" append="false" message="Debut des traitements ${line.separator}" />
+    </target>
+
+	
+	<target name="compile" depends="init" description="compile the source">
+		<echo message="Compilation des ressources..."/>
+		<mkdir dir="${build}/classes"/>
+	    <!-- Compiler le code java de ${src} dans ${build}/classes -->
+	    <javac srcdir="${src}" destdir="${build}/classes" includeantruntime="true"/>
+	</target>
+
+	
+	<target name="dist" depends="compile" description="generate the distribution">
+		<echo message="Generation du jar..."/>
+		<mkdir dir="${build}/jar"/>
+		<!-- Generer le runnable jar à partir des classes de ${build}/classes -->
+		<jar jarfile="${build}/jar/${ant.project.name}-${DSTAMP}.jar" basedir="${build}/classes">
+			<manifest>
+                <attribute name="Main-Class" value="n7.Main"/>
+            </manifest>
+		</jar>
+	</target>
+
+	<!-- Fin du build -->
+	<target name="all" depends="init, compile, dist" description="Generation complete">
+		<echo message="Fin des traitements du projet ${ant.project.name}"/>
+		<echo file="${basedir}/log.txt" append="true" message="Fin des traitements ${line.separator}"/>
+	</target>
+	
+	
+	<!-- Lancer le jar de test -->
+	<target name="TestPoint1" depends="all" description="Execution de tests">
+		<echo message="[TestPoint1] Lancement du test..."/>
+		<java jar="${build}/jar/${ant.project.name}-${DSTAMP}.jar" output="${basedir}/logTestPoint1.txt" fork="true"/>
+		<echo message="[TestPoint1] Fin du test"/>
+	</target>
+    
+	
 </project>
