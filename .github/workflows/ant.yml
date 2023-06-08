@@ -23,3 +23,6 @@ jobs:
         distribution: 'temurin'
     - name: Build with Ant
       run: ant -noinput -buildfile BasicAntProject/build.xml
+    - name: Show results
+      run: cat BasicAntProject/log.txt
+      run: cat BasicAntProject/logTestPoint1.txt

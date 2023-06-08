@@ -11,6 +11,7 @@
 	
 	<!-- Nettoyer le build précédent -->
 	<target name="clean">
+		<echo message="Nettoyage du build..."/> 
         <delete dir="build"/>
     </target>
 		
