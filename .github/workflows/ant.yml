@@ -21,7 +21,5 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Change directory
-      run: cd ./BasicAntProject
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml
+      run: ant -noinput -buildfile BasicAntProject/build.xml
