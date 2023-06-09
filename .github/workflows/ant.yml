@@ -9,7 +9,7 @@ on:
 
 env:
   # Arguments de commande pour lancer les tasks ant de test
-  ARG_JAR_RUN: PointTest1
+  ARG_JAR_RUN: TestPoint1
   ARG_JUNIT_TEST: test
   TEST_RESULTS_NAMES: TEST-*
   
@@ -53,4 +53,4 @@ jobs:
     - name: Build and Run jar
       run: ant ${ARG_JUNIT_TEST} -buildfile BasicAntProject/build.xml
     - name: Show results
-      run: cat BasicAntProject/${TEST_RESULT_NAMES}.txt
+      run: cat BasicAntProject/${TEST_RESULTS_NAMES}.txt
