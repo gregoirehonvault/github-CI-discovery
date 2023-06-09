@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<project name="AntTest" default="test" basedir=".">
+<project name="AntTest" default="build" basedir=".">
 	<description>
 		Builder Ant pour tests locaux
 	</description>
 	
-	<!-- Mettre en place les propriétés souvent réutilisées dans ce fichier -->
+	<!-- Chemins des ressources -->
 	<property name="src" location="src/n7"/>
 	<property name="build" location="build"/>
 	<property name="junit_path" value="Junit/junit-4.13.2.jar"/>
@@ -19,7 +19,6 @@
 	<!-- Debut du build -->
 	<target name="init" depends="clean">
     	<echo message="Debut des traitements"/> 
-	    <echo file="${basedir}/log.txt" append="false" message="Debut des traitements ${line.separator}" />
     </target>
 
 	
@@ -27,10 +26,13 @@
 		<echo message="Compilation des ressources..."/>
 		<mkdir dir="${build}/classes"/>
 		<mkdir dir="${build}/tests"/>
-	    <!-- Compiler le code java de ${src} dans ${build} -->
+		
+	    <!-- Compiler à part le code java de ${src} dans ${build} -->
 	    <javac srcdir="${src}" destdir="${build}/classes" includeantruntime="true">
             <exclude name="**/*Test*.java"/>
     	</javac>
+		
+		<!-- Compiler AVEC les codes de tests dans ${build}/tests -->
 		<javac srcdir="${src}" destdir="${build}/tests" includeantruntime="true">
 			<classpath>
     	        <pathelement path="${java.class.path}"/>
@@ -53,22 +55,22 @@
 	</target>
 
 	<!-- Fin du build -->
-	<target name="all" depends="init, compile, dist" description="Generation complete">
+	<target name="build" depends="init, compile, dist" description="Generation complete">
 		<echo message="Fin des traitements du projet ${ant.project.name}"/>
-		<echo file="${basedir}/log.txt" append="true" message="Fin des traitements ${line.separator}"/>
 	</target>
 	
 	
 	<!-- Lancer le jar de test -->
-	<target name="TestPoint1" depends="all" description="Execution de tests">
+	<target name="TestPoint1" depends="build" description="Execution de tests">
 		<echo message="[TestPoint1] Lancement du test..."/>
 		<java jar="${build}/jar/${ant.project.name}.jar" output="${basedir}/logTestPoint1.txt" fork="true"/>
 		<echo message="[TestPoint1] Fin du test"/>
 	</target>
 	
 	<!-- Lancer la batterie de tests Junit -->
-	<target name="test" depends="TestPoint1" description="Batterie de tests JUnit">
+	<target name="test" depends="build" description="Batterie de tests JUnit">
 
+		
 		<junit printsummary="true" haltonfailure="false">
 		    <classpath>
 		        <pathelement location="${junit_path}"/>
@@ -77,8 +79,11 @@
 		    	<pathelement location="${build}/tests"/>
 		    </classpath>
 
-		    <formatter type="plain"/>
+			<!-- Garder les résultats d'éxecution sous forme texte et xml-->
+			<formatter type="plain"/>
+		    <formatter type="xml"/>
 			
+			<!-- Lancer tous les tests portant un nom en ..Test..class-->
 			<batchtest fork="true" todir=".">
 	            <fileset dir="${build}/tests" includes="**/*Test*.class" />
 	        </batchtest>
