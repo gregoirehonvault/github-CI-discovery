@@ -27,6 +27,7 @@ jobs:
       run: cat BasicAntProject/log.txt
       
   run-jar:
+    needs: build
     runs-on: ubuntu-latest
     steps:
         - name: Show results
