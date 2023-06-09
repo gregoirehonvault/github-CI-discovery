@@ -1,4 +1,4 @@
-package n7;
+package src.n7;
 import java.awt.Color;
 
 /** Un segment est défini pas ses deux points qui constituent ses

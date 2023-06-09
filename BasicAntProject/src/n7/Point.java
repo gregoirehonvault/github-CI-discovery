@@ -1,4 +1,4 @@
-package n7;
+package src.n7;
 import java.awt.Color;
 
 /** Point modélise un point géométrique dans un plan équipé d'un

@@ -1,4 +1,4 @@
-package n7;
+package src.n7;
 
 public class Main {
 

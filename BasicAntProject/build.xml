@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
-<project name="AntTest" default="TestPoint1" basedir=".">
+<project name="AntTest" default="test" basedir=".">
 	<description>
 		Builder Ant pour tests locaux
 	</description>
 	
 	<!-- Mettre en place les propriétés souvent réutilisées dans ce fichier -->
-	<property name="src" location="src"/>
+	<property name="src" location="src/n7"/>
 	<property name="build" location="build"/>
-
+	<property name="junit_path" value="Junit/junit-4.13.2.jar"/>
+	<property name="hamcrest_path" value="Junit/hamcrest-core-1.3.jar"/>
 	
 	<!-- Nettoyer le build précédent -->
 	<target name="clean">
@@ -25,8 +26,18 @@
 	<target name="compile" depends="init" description="compile the source">
 		<echo message="Compilation des ressources..."/>
 		<mkdir dir="${build}/classes"/>
-	    <!-- Compiler le code java de ${src} dans ${build}/classes -->
-	    <javac srcdir="${src}" destdir="${build}/classes" includeantruntime="true"/>
+		<mkdir dir="${build}/tests"/>
+	    <!-- Compiler le code java de ${src} dans ${build} -->
+	    <javac srcdir="${src}" destdir="${build}/classes" includeantruntime="true">
+            <exclude name="**/*Test*.java"/>
+    	</javac>
+		<javac srcdir="${src}" destdir="${build}/tests" includeantruntime="true">
+			<classpath>
+    	        <pathelement path="${java.class.path}"/>
+    	        <pathelement location="${junit_path}"/>
+				<pathelement location="${hamcrest_path}"/>
+	        </classpath>
+		</javac>
 	</target>
 
 	
@@ -34,9 +45,9 @@
 		<echo message="Generation du jar..."/>
 		<mkdir dir="${build}/jar"/>
 		<!-- Generer le runnable jar à partir des classes de ${build}/classes -->
-		<jar jarfile="${build}/jar/${ant.project.name}-${DSTAMP}.jar" basedir="${build}/classes">
+		<jar jarfile="${build}/jar/${ant.project.name}.jar" basedir="${build}/classes">
 			<manifest>
-                <attribute name="Main-Class" value="n7.Main"/>
+                <attribute name="Main-Class" value="src.n7.Main"/>
             </manifest>
 		</jar>
 	</target>
@@ -51,8 +62,28 @@
 	<!-- Lancer le jar de test -->
 	<target name="TestPoint1" depends="all" description="Execution de tests">
 		<echo message="[TestPoint1] Lancement du test..."/>
-		<java jar="${build}/jar/${ant.project.name}-${DSTAMP}.jar" output="${basedir}/logTestPoint1.txt" fork="true"/>
+		<java jar="${build}/jar/${ant.project.name}.jar" output="${basedir}/logTestPoint1.txt" fork="true"/>
 		<echo message="[TestPoint1] Fin du test"/>
+	</target>
+	
+	<!-- Lancer la batterie de tests Junit -->
+	<target name="test" depends="TestPoint1" description="Batterie de tests JUnit">
+
+		<junit printsummary="true" haltonfailure="false">
+		    <classpath>
+		        <pathelement location="${junit_path}"/>
+		    	<pathelement location="${hamcrest_path}"/>
+		        <pathelement path="${java.class.path}"/>
+		    	<pathelement location="${build}/tests"/>
+		    </classpath>
+
+		    <formatter type="plain"/>
+			
+			<batchtest fork="true" todir=".">
+	            <fileset dir="${build}/tests" includes="**/*Test*.class" />
+	        </batchtest>
+
+		</junit>
 	</target>
     
 	
