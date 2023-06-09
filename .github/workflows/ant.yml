@@ -26,8 +26,6 @@ jobs:
     - name: Build with Ant
       id: build
       run: ant -noinput -buildfile BasicAntProject/build.xml
-    - name: Show build logs
-      run: cat BasicAntProject/log.txt
       
   run-jar:
     runs-on: ubuntu-latest
