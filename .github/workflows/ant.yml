@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -24,20 +22,14 @@ jobs:
     - name: Build with Ant
       id: build
       run: ant -noinput -buildfile BasicAntProject/build.xml
-
-      
-    outputs:
-      env: ${{ steps.build.outputs.test }} 
-    
-      
+    - name: Show build logs
+      run: cat BasicAntProject/log.txt
+     
   run-jar:
     needs: build
-    
     runs-on: ubuntu-latest
-    
     steps:
-        - name: Show logs
-          run: cat BasicAntProject/log.txt
+        
         - name: Show results
           run: cat BasicAntProject/logTestPoint1.txt
         
