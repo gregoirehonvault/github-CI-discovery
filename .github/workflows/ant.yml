@@ -24,12 +24,6 @@ jobs:
       run: ant -noinput -buildfile BasicAntProject/build.xml
     - name: Show build logs
       run: cat BasicAntProject/log.txt
-     
-  run-jar:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-        
-        - name: Show results
-          run: cat BasicAntProject/logTestPoint1.txt
+    - name: Show results
+      run: cat BasicAntProject/logTestPoint1.txt
         
