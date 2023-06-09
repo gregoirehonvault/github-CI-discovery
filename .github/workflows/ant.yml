@@ -52,5 +52,12 @@ jobs:
         distribution: 'temurin'
     - name: Build and Run jar
       run: ant ${ARG_JUNIT_TEST} -buildfile BasicAntProject/build.xml
-    - name: Show results
+    - name: Show results logs
       run: cat BasicAntProject/${TEST_RESULTS_NAMES}.txt
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()    # run this step even if previous step failed
+      with:
+        name: JEST Tests                            # Name of the check run which will be created
+        path: reports/${TEST_RESULTS_NAMES}.xml    # Path to test results
+        reporter: jest-junit                        # Format of test results
