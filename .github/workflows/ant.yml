@@ -57,8 +57,8 @@ jobs:
     - name: Upload result file
       uses: actions/upload-artifact@v3
       with:
-        name: ${TEST_RESULTS_NAMES}
-        path: BasicAntProject/${TEST_RESULTS_NAMES}.xml
+        name: TEST-src.n7.PointTest
+        path: BasicAntProject/TEST-src.n7.PointTest.xml
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
