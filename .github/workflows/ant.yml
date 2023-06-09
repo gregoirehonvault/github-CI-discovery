@@ -22,14 +22,22 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Build with Ant
+      id: build
       run: ant -noinput -buildfile BasicAntProject/build.xml
-    - name: Show logs
-      run: cat BasicAntProject/log.txt
+
+      
+    outputs:
+      env: ${{ steps.build.outputs.test }} 
+    
       
   run-jar:
     needs: build
+    
     runs-on: ubuntu-latest
+    
     steps:
+        - name: Show logs
+          run: cat BasicAntProject/log.txt
         - name: Show results
           run: cat BasicAntProject/logTestPoint1.txt
         
