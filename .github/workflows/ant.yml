@@ -54,6 +54,11 @@ jobs:
       run: ant ${ARG_JUNIT_TEST} -buildfile BasicAntProject/build.xml
     - name: Show results logs
       run: cat BasicAntProject/${TEST_RESULTS_NAMES}.xml
+    - name: Upload result file
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${TEST_RESULTS_NAMES}
+        path: BasicAntProject/${TEST_RESULTS_NAMES}.xml
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
