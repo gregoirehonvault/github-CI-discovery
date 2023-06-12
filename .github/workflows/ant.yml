@@ -65,6 +65,6 @@ jobs:
       with:
         artifact: Junit-results
         name: JEST Tests                                   # Name of the check run which will be created
-        path: BasicAntProject/${TEST_RESULTS_NAMES}.xml    # Path to test results
+        path: BasicAntProject/TEST-src.n7.PointTest.xml    # Path to test results
         reporter: jest-junit                               # Format of test results
         token: ${{ secrets.GITHUB_TOKEN }}
