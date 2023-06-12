@@ -19,8 +19,8 @@ public class Main {
 
 		// Afficher le schéma
 		System.out.println("Le schéma est composé de : ");
-		s12.afficher();		System.out.println();
 		s31.afficher();		System.out.println();
+		s12.afficher();		System.out.println();
 		s23.afficher();		System.out.println();
 		barycentre.afficher();	System.out.println();
 	}
