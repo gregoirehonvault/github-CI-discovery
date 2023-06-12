@@ -67,4 +67,4 @@ jobs:
         name: JEST Tests                                   # Name of the check run which will be created
         path: BasicAntProject/TEST-src.n7.PointTest.xml    # Path to test results
         reporter: jest-junit                               # Format of test results
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: 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
