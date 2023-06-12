@@ -42,7 +42,10 @@ jobs:
       run: cat BasicAntProject/logTestPoint1.txt
       
   junit-tests:
+  
+    // TO BE CHANGED should probably not be that permissive to distant unverified repo !
     permissions: write-all
+    
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
