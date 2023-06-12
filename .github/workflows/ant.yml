@@ -57,12 +57,14 @@ jobs:
     - name: Upload result file
       uses: actions/upload-artifact@v3
       with:
-        name: TEST-src.n7.PointTest
+        name: Junit-results
         path: BasicAntProject/TEST-src.n7.PointTest.xml
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
+        artifact: Junit-results
         name: JEST Tests                                   # Name of the check run which will be created
         path: BasicAntProject/${TEST_RESULTS_NAMES}.xml    # Path to test results
         reporter: jest-junit                               # Format of test results
+        token: ${{ secrets.GITHUB_TOKEN }}
