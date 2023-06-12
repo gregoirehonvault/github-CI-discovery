@@ -45,6 +45,7 @@ jobs:
   
     # TO BE CHANGED should probably not be that permissive to distant unverified repo !
     permissions: write-all
+    # ......................
     
     runs-on: ubuntu-latest
     steps:
