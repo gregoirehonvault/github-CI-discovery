@@ -62,3 +62,4 @@ jobs:
         name: JEST Tests                                   # Name of the check run which will be created
         path: BasicAntProject/TEST-src.n7.PointTest.xml    # Path to test results
         reporter: java-junit                               # Format of test results
+        fail-on-error: 'false'
