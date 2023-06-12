@@ -11,6 +11,7 @@ public class Main {
 		Segment s23 = new Segment(p2, p3);
 		Segment s31 = new Segment(p3, p1);
 
+		
 		// Créer le barycentre
 		double sx = p1.getX() + p2.getX() + p3.getX();
 		double sy = p1.getY() + p2.getY() + p3.getY();
