@@ -43,7 +43,7 @@ jobs:
       
   junit-tests:
   
-    // TO BE CHANGED should probably not be that permissive to distant unverified repo !
+    # TO BE CHANGED should probably not be that permissive to distant unverified repo !
     permissions: write-all
     
     runs-on: ubuntu-latest
