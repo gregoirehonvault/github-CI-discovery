@@ -55,8 +55,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - run: cd ~
-    - run: ls
     - name: Build and Run jar
       run: ant ${ARG_JUNIT_TEST} -buildfile BasicAntProject/build.xml
     - name: Show results logs
